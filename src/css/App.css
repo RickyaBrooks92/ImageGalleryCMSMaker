@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f9e9ec; /* Light Background Color */
+  color: #1d2f6f; /* Dark Primary Color */
+}
+
+.App {
+  display: flex;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-right: 250px; /* Adjust this to match the width of the sidebar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #f9e9ec; /* Light Background Color */
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  color: #1d2f6f; /* Dark Primary Color */
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #1d2f6f; /* Dark Primary Color */
+}
+
+.input-with-button {
+  display: flex;
+}
+
+.input-with-button input {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.input-with-button button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-with-button button:hover {
+  background-color: #c82333;
+}
+
+.add-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.add-button button {
+  padding: 10px 20px;
+  font-size: 24px;
+  background-color: #8390fa; /* Primary Color */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button button:hover {
+  background-color: #1d2f6f; /* Dark Primary Color */
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+  .content {
+    margin-right: 0;
+    padding: 10px;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    padding: 10px;
+  }
+}

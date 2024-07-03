@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import ImageGallery from "./components/ImageGallery";
+import Sidebar from "./components/SideBar";
+import "./css/App.css";
 
-function App() {
+const App = () => {
+  const [galleryProps, setGalleryProps] = useState({
+    images: [""], // Start with one blank image
+    layout: "flex", // Default layout
+    flexSettings: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "flex-start",
+      alignItems: "stretch",
+      gap: "10px",
+      alignContent: "center", // Always center content
+    },
+  });
+
+  const handleUpdate = (newProps) => {
+    setGalleryProps((prevProps) => ({ ...prevProps, ...newProps }));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Sidebar onUpdate={handleUpdate} />
+      <div className="content">
+        <ImageGallery
+          images={galleryProps.images}
+          layout={galleryProps.layout}
+          flexSettings={
+            galleryProps.layout === "flex" ? galleryProps.flexSettings : {}
+          }
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default App;

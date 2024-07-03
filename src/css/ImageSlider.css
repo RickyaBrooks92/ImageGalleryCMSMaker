@@ -1,0 +1,55 @@
+.slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider.default {
+  height: 300px;
+}
+
+.slider.default .slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slider.default .slide.active {
+  opacity: 1;
+}
+
+.slider.thumbnails .main-image {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+
+.slider.thumbnails .thumbnails {
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.slider.thumbnails .thumbnail {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.slider.thumbnails .thumbnail.active {
+  transform: scale(1.1);
+  border: 2px solid #000;
+}
+
+.slider.thumbnails .thumbnail:last-child {
+  margin-right: 0;
+}

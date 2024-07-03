@@ -1,0 +1,102 @@
+.sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #f9e9ec; /* Light Background Color */
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  color: #1d2f6f; /* Dark Primary Color */
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #1d2f6f; /* Dark Primary Color */
+}
+
+.input-with-button {
+  display: flex;
+}
+
+.input-with-button input {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.input-with-button button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-with-button button:hover {
+  background-color: #c82333;
+}
+
+.add-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.modern-plus-button {
+  width: 50px; /* Ensure equal width and height for a square shape */
+  height: 50px; /* Ensure equal width and height for a square shape */
+  font-size: 24px; /* Larger font size for visibility */
+  background-color: #8390fa; /* Primary Color */
+  color: white;
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modern-plus-button:hover {
+  background-color: #1d2f6f; /* Dark Primary Color */
+  transform: translateY(-2px);
+}
+
+.modern-plus-button:active {
+  transform: translateY(0);
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+  .content {
+    margin-right: 0;
+    padding: 10px;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    padding: 10px;
+  }
+}
