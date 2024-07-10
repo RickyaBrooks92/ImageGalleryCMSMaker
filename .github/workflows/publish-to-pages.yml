@@ -2,7 +2,7 @@ name: Publish to GitHub Pages
 
 on:
   push:
-    branches: ["master"]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -18,32 +18,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js 🍉
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20"
 
-      - name: Install dependencies 🥑
+      - name: Install dependencies
         run: npm install
 
-      - name: Build the React app 🍄
+      - name: Build the React app
         run: npm run build
 
-      - name: Upload artifact ⛱️
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: ./build # Specify the build directory
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages 🚀
-        id: deployment
-        uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        run: |
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "your-username"
+          git add -f build
+          git commit -m "Deploy to GitHub Pages"
+          git subtree push --prefix build origin master
