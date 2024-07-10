@@ -16,6 +16,12 @@ const Tab = ({ activeTab, onTabClick }) => {
       >
         Settings
       </button>
+      <button
+        className={`tab ${activeTab === "export" ? "active" : ""}`}
+        onClick={() => onTabClick("export")}
+      >
+        Export
+      </button>
     </div>
   );
 };

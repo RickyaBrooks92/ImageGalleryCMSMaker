@@ -2,7 +2,7 @@
   position: fixed;
   right: 0;
   top: 0;
-  width: 250px;
+  width: 250px; /* Ensure enough width for tabs */
   height: 100%;
   background-color: #f9e9ec; /* Light Background Color */
   padding: 20px;
@@ -98,5 +98,18 @@
     height: auto;
     box-shadow: none;
     padding: 10px;
+  }
+
+  .tab-container {
+    flex-direction: column; /* Stack tabs vertically on small screens */
+  }
+
+  .tab {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .tab:last-child {
+    margin-bottom: 0;
   }
 }
