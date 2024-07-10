@@ -1,0 +1,49 @@
+name: Publish to GitHub Pages
+
+on:
+  push:
+    branches: ["master"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js 🍉
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies 🥑
+        run: npm install
+
+      - name: Build the React app 🍄
+        run: npm run build
+
+      - name: Upload artifact ⛱️
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./build # Specify the build directory
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v1
