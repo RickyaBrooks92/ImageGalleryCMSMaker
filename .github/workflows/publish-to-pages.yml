@@ -34,8 +34,8 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          git config --global user.email "your-email@example.com"
-          git config --global user.name "your-username"
+          git config --global user.email "rickyabrooks92@Gmail.com"
+          git config --global user.name "rickyabrooks92"
           git add -f build
           git commit -m "Deploy to GitHub Pages"
           git subtree push --prefix build origin master
