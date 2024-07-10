@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node 🍉
         uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "20"
 
       - name: Install dependencies 🥑
         run: npm install
@@ -34,12 +34,11 @@ jobs:
       - name: Upload artifact ⛱️
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./build # This should be the build output directory for React
+          path: ./build # Ensure this is the correct build output directory
 
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
