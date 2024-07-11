@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/SideBar.css";
+import "./Sidebar.css";
 import Tab from "./Tab";
 import FlexSettings from "./FlexSettings";
 
@@ -53,17 +53,28 @@ const Sidebar = ({ onUpdate }) => {
 
   const handleExport = () => {
     const uniqueId = generateUniqueId();
+    const queryParams = new URLSearchParams({
+      id: uniqueId,
+      images: images.join(","),
+      layout,
+      flexDirection: flexSettings.flexDirection,
+      flexWrap: flexSettings.flexWrap,
+      justifyContent: flexSettings.justifyContent,
+      alignItems: flexSettings.alignItems,
+      gap: flexSettings.gap,
+    }).toString();
+
+    const exportURL = `https://rickyabrooks92.github.io/ImageGalleryCMSMaker/?${queryParams}`;
+
     const exportCode = `
 <script src="https://rickyabrooks92.github.io/ImageGalleryCMSMaker/gallery-init.js" defer></script>
 <div class="${uniqueId}"></div>
 <script>
   window.addEventListener('load', () => {
-    window.initializeGallery("${uniqueId}", ${JSON.stringify(
-      images
-    )}, "${layout}", ${JSON.stringify(flexSettings)});
+    window.initializeGallery("${uniqueId}");
   });
 </script>
-<a href="https://rickyabrooks92.github.io/ImageGalleryCMSMaker/gallery/${uniqueId}" target="_blank">View Gallery</a>`;
+<a href="${exportURL}" target="_blank">View Gallery</a>`;
 
     setExportCode(exportCode);
   };
@@ -127,10 +138,7 @@ const Sidebar = ({ onUpdate }) => {
               <textarea readOnly value={exportCode} rows="10" cols="30" />
               <p>
                 View your gallery:{" "}
-                <a
-                  href={`https://rickyabrooks92.github.io/ImageGalleryCMSMaker/gallery/${generateUniqueId()}`}
-                  target="_blank"
-                >
+                <a href={exportURL} target="_blank">
                   Click here
                 </a>
               </p>

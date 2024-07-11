@@ -1,5 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const initializeGallery = (uniqueId, images, layout, flexSettings) => {
+  const getQueryParams = (query) => {
+    return query
+      .substring(1)
+      .split("&")
+      .reduce((acc, param) => {
+        const [key, value] = param.split("=");
+        acc[decodeURIComponent(key)] = decodeURIComponent(value);
+        return acc;
+      }, {});
+  };
+
+  const initializeGallery = (queryParams) => {
+    const uniqueId = queryParams.id;
+    const images = queryParams.images ? queryParams.images.split(",") : [];
+    const layout = queryParams.layout || "flex";
+    const flexSettings = {
+      flexDirection: queryParams.flexDirection || "row",
+      flexWrap: queryParams.flexWrap || "wrap",
+      justifyContent: queryParams.justifyContent || "flex-start",
+      alignItems: queryParams.alignItems || "stretch",
+      gap: queryParams.gap || "10px",
+      alignContent: "center", // Always center content
+    };
+
     const galleryContainer = document.querySelector(`.${uniqueId}`);
     if (galleryContainer) {
       galleryContainer.innerHTML = `
@@ -81,5 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  window.initializeGallery = initializeGallery;
+  const queryParams = getQueryParams(window.location.search);
+  if (queryParams.id) {
+    initializeGallery(queryParams);
+  }
 });
