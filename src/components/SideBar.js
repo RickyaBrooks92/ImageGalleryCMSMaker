@@ -136,12 +136,6 @@ const Sidebar = ({ onUpdate }) => {
             <div>
               <p>Copy the following code to implement in your CMS:</p>
               <textarea readOnly value={exportCode} rows="10" cols="30" />
-              <p>
-                View your gallery:{" "}
-                <a href={exportURL} target="_blank">
-                  Click here
-                </a>
-              </p>
             </div>
           )}
         </div>
