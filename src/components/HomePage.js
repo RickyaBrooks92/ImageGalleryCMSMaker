@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import Sidebar from "./SideBar";
+import ImageGalleryEditor from "./ImageGalleryEditor";
 import ImageGallery from "./ImageGallery";
 import "../css/HomePage.css";
+
 const HomePage = () => {
   const [galleryProps, setGalleryProps] = useState({
-    images: [""], // Start with one blank image
-    layout: "flex", // Default layout
+    images: [""],
+    layout: "flex",
     flexSettings: {
       flexDirection: "row",
       flexWrap: "wrap",
       justifyContent: "flex-start",
       alignItems: "stretch",
       gap: "10px",
-      alignContent: "center", // Always center content
+      alignContent: "center",
     },
   });
 
@@ -22,7 +23,7 @@ const HomePage = () => {
 
   return (
     <div className="HomePage">
-      <Sidebar onUpdate={handleUpdate} />
+      <ImageGalleryEditor onUpdate={handleUpdate} />
       <div className="content">
         <ImageGallery
           images={galleryProps.images}

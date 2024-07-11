@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import "../css/SideBar.css";
+import "../css/ImageGalleryEditor.css";
 import Tab from "./Tab";
-import FlexSettings from "./FlexSettings";
+import ImageSettings from "./ImageSettings";
+import LayoutSettings from "./LayoutSettings";
+import ExportSettings from "./ExportSettings";
 
-const Sidebar = ({ onUpdate }) => {
+const ImageGalleryEditor = ({ onUpdate }) => {
   const [images, setImages] = useState([""]); // Start with one blank image
   const [activeTab, setActiveTab] = useState("images");
   const [layout, setLayout] = useState("flex"); // Default layout
@@ -23,8 +25,8 @@ const Sidebar = ({ onUpdate }) => {
     onUpdate({ images: newImages, layout, flexSettings });
   };
 
-  const handleAddImage = () => {
-    const newImages = [...images, ""];
+  const handleAddImage = (image) => {
+    const newImages = [...images, image || ""];
     setImages(newImages);
     onUpdate({ images: newImages, layout, flexSettings });
   };
@@ -222,64 +224,27 @@ const Sidebar = ({ onUpdate }) => {
   return (
     <div className="sidebar">
       <Tab activeTab={activeTab} onTabClick={setActiveTab} />
-      {activeTab === "images" ? (
-        <div>
-          <h2>Customize Gallery</h2>
-          {images.map((image, index) => (
-            <div key={index} className="input-group">
-              <label>Image {index + 1}</label>
-              <div className="input-with-button">
-                <input
-                  type="text"
-                  value={image}
-                  onChange={(e) => handleImageChange(index, e.target.value)}
-                />
-                <button
-                  className="remove-button"
-                  onClick={() => handleRemoveImage(index)}
-                >
-                  -
-                </button>
-              </div>
-            </div>
-          ))}
-          <div className="add-button">
-            <button className="modern-plus-button" onClick={handleAddImage}>
-              +
-            </button>
-          </div>
-        </div>
-      ) : activeTab === "settings" ? (
-        <div>
-          <h2>Layout Settings</h2>
-          <div className="input-group">
-            <label>Layout</label>
-            <select value={layout} onChange={handleLayoutChange}>
-              <option value="flex">Flex</option>
-              <option value="grid">Grid</option>
-            </select>
-          </div>
-          {layout === "flex" && (
-            <FlexSettings
-              flexSettings={flexSettings}
-              handleFlexSettingChange={handleFlexSettingChange}
-            />
-          )}
-        </div>
-      ) : activeTab === "export" ? (
-        <div>
-          <h2>Export Code</h2>
-          <button onClick={handleExport}>Export</button>
-          {exportCode && (
-            <div>
-              <p>Copy the following code to implement in your CMS:</p>
-              <textarea readOnly value={exportCode} rows="10" cols="30" />
-            </div>
-          )}
-        </div>
-      ) : null}
+      {activeTab === "images" && (
+        <ImageSettings
+          images={images}
+          handleImageChange={handleImageChange}
+          handleAddImage={handleAddImage}
+          handleRemoveImage={handleRemoveImage}
+        />
+      )}
+      {activeTab === "settings" && (
+        <LayoutSettings
+          layout={layout}
+          handleLayoutChange={handleLayoutChange}
+          flexSettings={flexSettings}
+          handleFlexSettingChange={handleFlexSettingChange}
+        />
+      )}
+      {activeTab === "export" && (
+        <ExportSettings handleExport={handleExport} exportCode={exportCode} />
+      )}
     </div>
   );
 };
 
-export default Sidebar;
+export default ImageGalleryEditor;
