@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Sidebar.css";
+import "./SideBar.css";
 import Tab from "./Tab";
 import FlexSettings from "./FlexSettings";
 
