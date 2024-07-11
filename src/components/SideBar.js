@@ -171,8 +171,24 @@ const Sidebar = ({ onUpdate }) => {
 
             const closeLightbox = () => {
               document.body.removeChild(lightbox);
+              document.removeEventListener('keydown', handleKeydown);
             };
 
+            const handleKeydown = (e) => {
+              if (e.key === 'Escape') {
+                closeLightbox();
+              } else if (e.key === 'ArrowLeft') {
+                const prevIndex = (index - 1 + ${images.length}) % ${images.length};
+                lightbox.querySelector('.lightbox-image').src = document.querySelectorAll('.${uniqueId} .thumbnail img')[prevIndex].src;
+                index = prevIndex;
+              } else if (e.key === 'ArrowRight') {
+                const nextIndex = (index + 1) % ${images.length};
+                lightbox.querySelector('.lightbox-image').src = document.querySelectorAll('.${uniqueId} .thumbnail img')[nextIndex].src;
+                index = nextIndex;
+              }
+            };
+
+            document.addEventListener('keydown', handleKeydown);
             lightbox.querySelector('.close').addEventListener('click', closeLightbox);
             lightbox.querySelector('.prev').addEventListener('click', (e) => {
               e.stopPropagation();
