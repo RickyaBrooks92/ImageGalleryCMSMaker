@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/SideBar.css";
+import "../css/Sidebar.css";
 import Tab from "./Tab";
 import FlexSettings from "./FlexSettings";
 
@@ -53,28 +53,148 @@ const Sidebar = ({ onUpdate }) => {
 
   const handleExport = () => {
     const uniqueId = generateUniqueId();
-    const queryParams = new URLSearchParams({
-      id: uniqueId,
-      images: images.join(","),
-      layout,
-      flexDirection: flexSettings.flexDirection,
-      flexWrap: flexSettings.flexWrap,
-      justifyContent: flexSettings.justifyContent,
-      alignItems: flexSettings.alignItems,
-      gap: flexSettings.gap,
-    }).toString();
+    const galleryHtml = `
+      <div class="${uniqueId}" style="
+        display: ${layout === "flex" ? "flex" : "grid"};
+        ${
+          layout === "flex"
+            ? `flex-direction: ${flexSettings.flexDirection}; flex-wrap: ${flexSettings.flexWrap};`
+            : ""
+        }
+        gap: ${flexSettings.gap};
+        justify-content: ${flexSettings.justifyContent};
+        align-items: ${flexSettings.alignItems};
+        align-content: center;
+        height: 100vh;
+      ">
+        ${images
+          .map((image, index) =>
+            image
+              ? `<div class="thumbnail" style="
+                    position: relative;
+                    cursor: pointer;
+                    overflow: hidden;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s;
+                    flex: 0 1 200px;
+                    height: 200px;
+                  "><img src="${image}" alt="Gallery item ${index + 1}" style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    transition: transform 0.3s ease;
+                  "/></div>`
+              : ""
+          )
+          .join("")}
+      </div>
+    `;
 
-    const exportURL = `https://rickyabrooks92.github.io/ImageGalleryCMSMaker/?${queryParams}`;
+    const galleryCss = `
+      <style>
+        .${uniqueId} .thumbnail {
+          position: relative;
+          cursor: pointer;
+          overflow: hidden;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s;
+        }
+        .${uniqueId} .thumbnail img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.3s ease;
+        }
+        .${uniqueId} .thumbnail:hover {
+          transform: scale(1.05);
+        }
+        .lightbox {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+        }
+        .lightbox img {
+          max-width: 90%;
+          max-height: 90%;
+        }
+        .lightbox .close {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          font-size: 30px;
+          color: #fff;
+          cursor: pointer;
+        }
+        .lightbox .prev, .lightbox .next {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 30px;
+          color: #fff;
+          cursor: pointer;
+        }
+        .lightbox .prev {
+          left: 20px;
+        }
+        .lightbox .next {
+          right: 20px;
+        }
+      </style>
+    `;
+
+    const galleryJs = `
+      <script>
+        document.querySelectorAll('.${uniqueId} .thumbnail').forEach((thumbnail, index) => {
+          thumbnail.addEventListener('click', () => {
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox';
+            lightbox.innerHTML = \`
+              <span class="close">&times;</span>
+              <img src="\${thumbnail.querySelector('img').src}" class="lightbox-image" alt="Gallery item \${index + 1}" />
+              <span class="prev">&#10094;</span>
+              <span class="next">&#10095;</span>
+            \`;
+            document.body.appendChild(lightbox);
+
+            const closeLightbox = () => {
+              document.body.removeChild(lightbox);
+            };
+
+            lightbox.querySelector('.close').addEventListener('click', closeLightbox);
+            lightbox.querySelector('.prev').addEventListener('click', (e) => {
+              e.stopPropagation();
+              const prevIndex = (index - 1 + ${images.length}) % ${images.length};
+              lightbox.querySelector('.lightbox-image').src = document.querySelectorAll('.${uniqueId} .thumbnail img')[prevIndex].src;
+              index = prevIndex;
+            });
+
+            lightbox.querySelector('.next').addEventListener('click', (e) => {
+              e.stopPropagation();
+              const nextIndex = (index + 1) % ${images.length};
+              lightbox.querySelector('.lightbox-image').src = document.querySelectorAll('.${uniqueId} .thumbnail img')[nextIndex].src;
+              index = nextIndex;
+            });
+          });
+        });
+      </script>
+    `;
 
     const exportCode = `
-<script src="https://rickyabrooks92.github.io/ImageGalleryCMSMaker/gallery-init.js" defer></script>
-<div class="${uniqueId}"></div>
-<script>
-  window.addEventListener('load', () => {
-    window.initializeGallery("${uniqueId}");
-  });
-</script>
-<a href="${exportURL}" target="_blank">View Gallery</a>`;
+      ${galleryHtml}
+      ${galleryCss}
+      ${galleryJs}
+    `;
 
     setExportCode(exportCode);
   };
