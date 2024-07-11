@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/ImageGalleryCMSMaker" element={<HomePage />} />
         <Route path="/gallery/:id" element={<GalleryPage />} />
       </Routes>
     </Router>
