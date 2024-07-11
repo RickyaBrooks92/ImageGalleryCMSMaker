@@ -18,7 +18,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deployy": "gh-pages -d build",
+    "deploy": "npm run build && git checkout master && rm -rf static css js index.html && cp -r build/* . && rm -rf build && git add . && git commit -m 'Deploy React app to GitHub Pages' && git push origin master"
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +41,5 @@
   },
   "devDependencies": {
     "gh-pages": "^6.1.1"
-  },
-  "homepage": "https://rickyabrooks92.github.io/ImageGalleryCMSMaker/"
+  }
 }
