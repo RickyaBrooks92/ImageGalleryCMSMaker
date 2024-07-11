@@ -54,7 +54,7 @@ const Sidebar = ({ onUpdate }) => {
   const handleExport = () => {
     const uniqueId = generateUniqueId();
     const exportCode = `
-<script src="https://your-username.github.io/your-repo-name/docs/gallery-init.js" defer></script>
+<script src="https://rickyabrooks92.github.io/ImageGalleryCMSMaker/gallery-init.js" defer></script>
 <div class="${uniqueId}"></div>
 <script>
   window.addEventListener('load', () => {
@@ -62,7 +62,8 @@ const Sidebar = ({ onUpdate }) => {
       images
     )}, "${layout}", ${JSON.stringify(flexSettings)});
   });
-</script>`;
+</script>
+<a href="https://rickyabrooks92.github.io/ImageGalleryCMSMaker/gallery/${uniqueId}" target="_blank">View Gallery</a>`;
 
     setExportCode(exportCode);
   };
@@ -124,6 +125,15 @@ const Sidebar = ({ onUpdate }) => {
             <div>
               <p>Copy the following code to implement in your CMS:</p>
               <textarea readOnly value={exportCode} rows="10" cols="30" />
+              <p>
+                View your gallery:{" "}
+                <a
+                  href={`https://rickyabrooks92.github.io/ImageGalleryCMSMaker/gallery/${generateUniqueId()}`}
+                  target="_blank"
+                >
+                  Click here
+                </a>
+              </p>
             </div>
           )}
         </div>
