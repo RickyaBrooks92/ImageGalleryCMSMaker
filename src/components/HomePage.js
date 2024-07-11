@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "./SideBar";
 import ImageGallery from "./ImageGallery";
-import "../css/App.css";
+import "../css/HomePage.css";
 const HomePage = () => {
   const [galleryProps, setGalleryProps] = useState({
     images: [""], // Start with one blank image

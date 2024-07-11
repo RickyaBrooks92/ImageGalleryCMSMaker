@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/Sidebar.css";
+import "../css/SideBar.css";
 import Tab from "./Tab";
 import FlexSettings from "./FlexSettings";
 
@@ -53,6 +53,29 @@ const Sidebar = ({ onUpdate }) => {
 
   const handleExport = () => {
     const uniqueId = generateUniqueId();
+    const imagesHtml = images
+      .map((image, index) =>
+        image
+          ? `<div class="thumbnail" style="
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        flex: 0 1 200px;
+        height: 200px;
+      "><img src="${image}" alt="Gallery item ${index + 1}" style="
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      "/></div>`
+          : ""
+      )
+      .join("");
+
     const galleryHtml = `
       <div class="${uniqueId}" style="
         display: ${layout === "flex" ? "flex" : "grid"};
@@ -67,28 +90,7 @@ const Sidebar = ({ onUpdate }) => {
         align-content: center;
         height: 100vh;
       ">
-        ${images
-          .map((image, index) =>
-            image
-              ? `<div class="thumbnail" style="
-                    position: relative;
-                    cursor: pointer;
-                    overflow: hidden;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    transition: transform 0.2s;
-                    flex: 0 1 200px;
-                    height: 200px;
-                  "><img src="${image}" alt="Gallery item ${index + 1}" style="
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    display: block;
-                    transition: transform 0.3s ease;
-                  "/></div>`
-              : ""
-          )
-          .join("")}
+        ${imagesHtml}
       </div>
     `;
 
