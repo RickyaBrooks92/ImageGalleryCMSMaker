@@ -1,43 +1,54 @@
-import React from "react";
-import { storage } from "../../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import React, { useState, useEffect } from "react";
+import { initializeApp } from "firebase/app";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const ImageSettings = ({
   images,
   handleImageChange,
   handleAddImage,
   handleRemoveImage,
+  firebaseConfig,
 }) => {
+  const [storage, setStorage] = useState(null);
+
+  useEffect(() => {
+    if (firebaseConfig.apiKey) {
+      try {
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+        setStorage(storage);
+      } catch (error) {
+        console.error("Firebase initialization error:", error);
+      }
+    }
+  }, [firebaseConfig]);
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      console.log("File selected:", file);
+    if (file && storage) {
+      const storageRef = ref(storage, `images/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-      try {
-        const storageRef = ref(storage, `images/${file.name}`);
-        console.log("Storage reference created:", storageRef);
-
-        const uploadTask = uploadBytesResumable(storageRef, file);
-        console.log("Upload task created:", uploadTask);
-
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            console.log("Upload progress:", snapshot);
-          },
-          (error) => {
-            console.error("Upload error:", error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              console.log("File available at:", downloadURL);
-              handleAddImage(downloadURL);
-            });
-          }
-        );
-      } catch (error) {
-        console.error("Error creating storage reference:", error);
-      }
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Progress function ...
+        },
+        (error) => {
+          // Error function ...
+          console.error("Upload error:", error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            handleAddImage(downloadURL);
+          });
+        }
+      );
     }
   };
 
@@ -45,7 +56,7 @@ const ImageSettings = ({
     <div>
       <h2>Customize Gallery</h2>
       {images.map((image, index) => (
-        <div key={index} className="input-group">
+        <div key={index} className="firebase-input-group">
           <label>Image {index + 1}</label>
           <div className="input-with-button">
             <input

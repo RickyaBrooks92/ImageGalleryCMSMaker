@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "../../css/SidePanel.css";
+import { ToastContainer } from "react-toastify";
+import "../../css/SidePanel.css"; // You may want to rename this CSS file too
 import Tab from "./Tab";
 import ImageSettings from "./ImageSettings";
 import LayoutSettings from "./LayoutSettings";
@@ -63,6 +64,10 @@ const SidePanel = ({ onUpdate }) => {
   const handleFirebaseConfigChange = (e) => {
     const { name, value } = e.target;
     setFirebaseConfig((prevConfig) => ({ ...prevConfig, [name]: value }));
+  };
+
+  const handleFirebaseSave = (config) => {
+    setFirebaseConfig(config);
   };
 
   const generateUniqueId = () => {
@@ -274,8 +279,10 @@ const SidePanel = ({ onUpdate }) => {
           firebaseConfig={firebaseConfig}
           handleFirebaseConfigChange={handleFirebaseConfigChange}
           onClose={() => setIsFirebaseModalOpen(false)}
+          onSave={handleFirebaseSave}
         />
       )}
+      <ToastContainer />
     </div>
   );
 };

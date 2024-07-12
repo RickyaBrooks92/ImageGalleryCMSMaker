@@ -1,14 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import HomePage from "./components/HomePage";
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/ImageGalleryCMSMaker" element={<HomePage />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/ImageGalleryCMSMaker" element={<HomePage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 };
 
