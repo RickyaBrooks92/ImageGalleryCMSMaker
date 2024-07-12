@@ -1,5 +1,5 @@
 import React from "react";
-import { storage } from "../firebase";
+import { storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const ImageSettings = ({

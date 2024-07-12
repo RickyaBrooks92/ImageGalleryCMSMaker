@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ImageGalleryEditor from "./ImageGalleryEditor";
+import SidePanel from "./SettingsPanel/SidePanel";
 import ImageGallery from "./ImageGallery";
 import "../css/HomePage.css";
 
@@ -23,7 +23,7 @@ const HomePage = () => {
 
   return (
     <div className="HomePage">
-      <ImageGalleryEditor onUpdate={handleUpdate} />
+      <SidePanel onUpdate={handleUpdate} />
       <div className="content">
         <ImageGallery
           images={galleryProps.images}

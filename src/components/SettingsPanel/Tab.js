@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Tab.css";
+import "../../css/Tab.css";
 
 const Tab = ({ activeTab, onTabClick }) => {
   return (
@@ -15,6 +15,12 @@ const Tab = ({ activeTab, onTabClick }) => {
         onClick={() => onTabClick("settings")}
       >
         Settings
+      </button>
+      <button
+        className={`tab ${activeTab === "firebase" ? "active" : ""}`}
+        onClick={() => onTabClick("firebase")}
+      >
+        Firebase
       </button>
       <button
         className={`tab ${activeTab === "export" ? "active" : ""}`}

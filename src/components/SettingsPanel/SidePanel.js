@@ -1,22 +1,33 @@
 import React, { useState } from "react";
-import "../css/ImageGalleryEditor.css";
+import "../../css/SidePanel.css";
 import Tab from "./Tab";
 import ImageSettings from "./ImageSettings";
 import LayoutSettings from "./LayoutSettings";
 import ExportSettings from "./ExportSettings";
+import FirebaseModal from "./FirebaseModal";
 
-const ImageGalleryEditor = ({ onUpdate }) => {
-  const [images, setImages] = useState([""]); // Start with one blank image
+const SidePanel = ({ onUpdate }) => {
+  const [images, setImages] = useState([""]);
   const [activeTab, setActiveTab] = useState("images");
-  const [layout, setLayout] = useState("flex"); // Default layout
+  const [layout, setLayout] = useState("flex");
   const [flexSettings, setFlexSettings] = useState({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "stretch",
     gap: "10px",
-    alignContent: "center", // Always center content
+    alignContent: "center",
   });
+  const [firebaseConfig, setFirebaseConfig] = useState({
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: "",
+  });
+  const [isFirebaseModalOpen, setIsFirebaseModalOpen] = useState(false);
 
   const handleImageChange = (index, value) => {
     const newImages = [...images];
@@ -47,6 +58,11 @@ const ImageGalleryEditor = ({ onUpdate }) => {
     const newFlexSettings = { ...flexSettings, [name]: value };
     setFlexSettings(newFlexSettings);
     onUpdate({ images, layout, flexSettings: newFlexSettings });
+  };
+
+  const handleFirebaseConfigChange = (e) => {
+    const { name, value } = e.target;
+    setFirebaseConfig((prevConfig) => ({ ...prevConfig, [name]: value }));
   };
 
   const generateUniqueId = () => {
@@ -230,6 +246,7 @@ const ImageGalleryEditor = ({ onUpdate }) => {
           handleImageChange={handleImageChange}
           handleAddImage={handleAddImage}
           handleRemoveImage={handleRemoveImage}
+          firebaseConfig={firebaseConfig}
         />
       )}
       {activeTab === "settings" && (
@@ -240,11 +257,27 @@ const ImageGalleryEditor = ({ onUpdate }) => {
           handleFlexSettingChange={handleFlexSettingChange}
         />
       )}
+      {activeTab === "firebase" && (
+        <button
+          className="firebase-button"
+          onClick={() => setIsFirebaseModalOpen(true)}
+        >
+          Firebase
+        </button>
+      )}
       {activeTab === "export" && (
         <ExportSettings handleExport={handleExport} exportCode={exportCode} />
+      )}
+
+      {isFirebaseModalOpen && (
+        <FirebaseModal
+          firebaseConfig={firebaseConfig}
+          handleFirebaseConfigChange={handleFirebaseConfigChange}
+          onClose={() => setIsFirebaseModalOpen(false)}
+        />
       )}
     </div>
   );
 };
 
-export default ImageGalleryEditor;
+export default SidePanel;

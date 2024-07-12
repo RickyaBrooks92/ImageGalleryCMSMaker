@@ -1,5 +1,5 @@
 import React from "react";
-import FlexSettings from "./FlexSettings";
+import FlexSettings from "../FlexSettings";
 
 const LayoutSettings = ({
   layout,
