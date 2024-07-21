@@ -1,14 +1,15 @@
 .sidebar {
   position: fixed;
-  right: 0;
+  left: 0; /* Change from right to left */
   top: 0;
-  width: 250px; /* Ensure enough width for tabs */
+  width: 250px;
   height: 100%;
   background-color: #f9e9ec; /* Light Background Color */
   padding: 20px;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adjust shadow direction */
   overflow-y: auto;
   box-sizing: border-box;
+  z-index: 1000; /* Ensure it stays on top */
 }
 
 .sidebar h2 {
@@ -88,7 +89,7 @@
 /* Media query for responsive design */
 @media (max-width: 768px) {
   .content {
-    margin-right: 0;
+    margin-left: 0; /* Adjust this to align with the sidebar on smaller screens */
     padding: 10px;
   }
 
