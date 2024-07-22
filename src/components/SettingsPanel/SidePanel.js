@@ -1,11 +1,54 @@
 import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import "../../css/SidePanel.css"; // You may want to rename this CSS file too
-import Tab from "./Tab";
+import { Button, Box, IconButton, Typography } from "@mui/material";
 import ImageSettings from "./ImageSettings";
 import LayoutSettings from "./LayoutSettings";
 import ExportSettings from "./ExportSettings";
 import FirebaseModal from "./FirebaseModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faImage,
+  faCogs,
+  faDatabase,
+  faFileExport,
+} from "@fortawesome/free-solid-svg-icons";
+
+const styles = {
+  sidebar: {
+    display: "flex",
+    height: "100vh",
+    flexDirection: "row",
+    backgroundColor: "#f4f4f4",
+    padding: "10px",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    width: "250px",
+    overflow: "hidden",
+  },
+  tabsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "60px",
+    borderRight: "1px solid #ddd",
+    padding: "10px 0",
+  },
+  tabButton: {
+    marginBottom: "10px",
+    padding: "10px",
+    borderRadius: "5px",
+    transition: "background-color 0.3s ease",
+  },
+  tabButtonActive: {
+    backgroundColor: "#ddd",
+  },
+  contentContainer: {
+    flex: 1,
+    padding: "10px",
+    overflowY: "auto",
+    maxHeight: "100vh",
+  },
+};
 
 const SidePanel = ({ onUpdate }) => {
   const [images, setImages] = useState([""]);
@@ -243,36 +286,81 @@ const SidePanel = ({ onUpdate }) => {
   const [exportCode, setExportCode] = useState("");
 
   return (
-    <div className="sidebar">
-      <Tab activeTab={activeTab} onTabClick={setActiveTab} />
-      {activeTab === "images" && (
-        <ImageSettings
-          images={images}
-          handleImageChange={handleImageChange}
-          handleAddImage={handleAddImage}
-          handleRemoveImage={handleRemoveImage}
-          firebaseConfig={firebaseConfig}
-        />
-      )}
-      {activeTab === "settings" && (
-        <LayoutSettings
-          layout={layout}
-          handleLayoutChange={handleLayoutChange}
-          flexSettings={flexSettings}
-          handleFlexSettingChange={handleFlexSettingChange}
-        />
-      )}
-      {activeTab === "firebase" && (
-        <button
-          className="firebase-button"
-          onClick={() => setIsFirebaseModalOpen(true)}
+    <Box sx={styles.sidebar}>
+      <Box sx={styles.tabsContainer}>
+        <IconButton
+          sx={{
+            ...styles.tabButton,
+            ...(activeTab === "images" && styles.tabButtonActive),
+          }}
+          onClick={() => setActiveTab("images")}
         >
-          Firebase
-        </button>
-      )}
-      {activeTab === "export" && (
-        <ExportSettings handleExport={handleExport} exportCode={exportCode} />
-      )}
+          <FontAwesomeIcon icon={faImage} />
+        </IconButton>
+        <IconButton
+          sx={{
+            ...styles.tabButton,
+            ...(activeTab === "settings" && styles.tabButtonActive),
+          }}
+          onClick={() => setActiveTab("settings")}
+        >
+          <FontAwesomeIcon icon={faCogs} />
+        </IconButton>
+        <IconButton
+          sx={{
+            ...styles.tabButton,
+            ...(activeTab === "firebase" && styles.tabButtonActive),
+          }}
+          onClick={() => setActiveTab("firebase")}
+        >
+          <FontAwesomeIcon icon={faDatabase} />
+        </IconButton>
+        <IconButton
+          sx={{
+            ...styles.tabButton,
+            ...(activeTab === "export" && styles.tabButtonActive),
+          }}
+          onClick={() => setActiveTab("export")}
+        >
+          <FontAwesomeIcon icon={faFileExport} />
+        </IconButton>
+      </Box>
+      <Box sx={styles.contentContainer}>
+        {activeTab === "images" && (
+          <ImageSettings
+            images={images}
+            handleImageChange={handleImageChange}
+            handleAddImage={handleAddImage}
+            handleRemoveImage={handleRemoveImage}
+            firebaseConfig={firebaseConfig}
+          />
+        )}
+        {activeTab === "settings" && (
+          <LayoutSettings
+            layout={layout}
+            handleLayoutChange={handleLayoutChange}
+            flexSettings={flexSettings}
+            handleFlexSettingChange={handleFlexSettingChange}
+          />
+        )}
+        {activeTab === "firebase" && (
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              Firebase Settings
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setIsFirebaseModalOpen(true)}
+            >
+              Configure Firebase
+            </Button>
+          </Box>
+        )}
+        {activeTab === "export" && (
+          <ExportSettings handleExport={handleExport} exportCode={exportCode} />
+        )}
+      </Box>
 
       {isFirebaseModalOpen && (
         <FirebaseModal
@@ -283,7 +371,7 @@ const SidePanel = ({ onUpdate }) => {
         />
       )}
       <ToastContainer />
-    </div>
+    </Box>
   );
 };
 

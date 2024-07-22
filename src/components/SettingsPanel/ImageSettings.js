@@ -6,6 +6,50 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { TextField, IconButton, Button, Box } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import UploadIcon from "@mui/icons-material/Upload";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  inputContainer: {
+    marginLeft: "auto",
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
+    marginBottom: "10px",
+  },
+  uploadButton: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "10px",
+  },
+  addButton: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "20px",
+  },
+  button: {
+    backgroundColor: "#1D2F6F",
+    color: "#F9E9EC",
+    "&:hover": {
+      backgroundColor: "#8390FA",
+    },
+  },
+  iconButton: {
+    color: "#1D2F6F",
+    "&:hover": {
+      color: "#8390FA",
+    },
+  },
+};
 
 const ImageSettings = ({
   images,
@@ -53,35 +97,41 @@ const ImageSettings = ({
   };
 
   return (
-    <div>
-      <h2>Customize Gallery</h2>
+    <Box sx={styles.container}>
       {images.map((image, index) => (
-        <div key={index} className="firebase-input-group">
-          <label>Image {index + 1}</label>
-          <div className="input-with-button">
-            <input
-              type="text"
-              value={image}
-              onChange={(e) => handleImageChange(index, e.target.value)}
-            />
-            <button
-              className="remove-button"
-              onClick={() => handleRemoveImage(index)}
-            >
-              -
-            </button>
-          </div>
-        </div>
+        <Box key={index} sx={styles.inputContainer}>
+          <TextField
+            variant="outlined"
+            size="small"
+            value={image}
+            onChange={(e) => handleImageChange(index, e.target.value)}
+            fullWidth
+          />
+          <IconButton
+            sx={styles.iconButton}
+            onClick={() => handleRemoveImage(index)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
       ))}
-      <div className="add-button">
-        <button className="modern-plus-button" onClick={handleAddImage}>
-          +
-        </button>
-      </div>
-      <div className="upload-button">
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-      </div>
-    </div>
+      <Box sx={styles.uploadButton}>
+        <Button sx={styles.button} variant="contained" component="label">
+          <UploadIcon />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            hidden
+          />
+        </Button>
+      </Box>
+      <Box sx={styles.addButton}>
+        <IconButton sx={styles.iconButton} onClick={() => handleAddImage("")}>
+          <FontAwesomeIcon icon={faPlus} />
+        </IconButton>
+      </Box>
+    </Box>
   );
 };
 

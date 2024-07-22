@@ -1,7 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SidePanel from "./SettingsPanel/SidePanel";
 import ImageGallery from "./ImageGallery";
-import "../css/HomePage.css";
+
+const styles = {
+  body: {
+    overflow: "hidden",
+  },
+  homePage: {
+    display: "flex",
+    height: "100vh",
+  },
+  sidePanel: {
+    width: "250px",
+  },
+  content: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "20px",
+  },
+};
 
 const HomePage = () => {
   const [galleryProps, setGalleryProps] = useState({
@@ -21,10 +40,19 @@ const HomePage = () => {
     setGalleryProps((prevProps) => ({ ...prevProps, ...newProps }));
   };
 
+  useEffect(() => {
+    document.body.style.overflow = styles.body.overflow;
+    return () => {
+      document.body.style.overflow = "auto"; // Reset overflow when component unmounts
+    };
+  }, []);
+
   return (
-    <div className="HomePage">
-      <SidePanel onUpdate={handleUpdate} />
-      <div className="content">
+    <div style={styles.homePage}>
+      <div style={styles.sidePanel}>
+        <SidePanel onUpdate={handleUpdate} />
+      </div>
+      <div style={styles.content}>
         <ImageGallery
           images={galleryProps.images}
           layout={galleryProps.layout}

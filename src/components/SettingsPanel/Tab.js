@@ -1,5 +1,11 @@
 import React from "react";
-import "../../css/Tab.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faImage,
+  faCogs,
+  faDatabase,
+  faFileExport,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Tab = ({ activeTab, onTabClick }) => {
   return (
@@ -8,25 +14,25 @@ const Tab = ({ activeTab, onTabClick }) => {
         className={`tab ${activeTab === "images" ? "active" : ""}`}
         onClick={() => onTabClick("images")}
       >
-        Images
+        <FontAwesomeIcon icon={faImage} />
       </button>
       <button
         className={`tab ${activeTab === "settings" ? "active" : ""}`}
         onClick={() => onTabClick("settings")}
       >
-        Settings
+        <FontAwesomeIcon icon={faCogs} />
       </button>
       <button
         className={`tab ${activeTab === "firebase" ? "active" : ""}`}
         onClick={() => onTabClick("firebase")}
       >
-        Firebase
+        <FontAwesomeIcon icon={faDatabase} />
       </button>
       <button
         className={`tab ${activeTab === "export" ? "active" : ""}`}
         onClick={() => onTabClick("export")}
       >
-        Export
+        <FontAwesomeIcon icon={faFileExport} />
       </button>
     </div>
   );
