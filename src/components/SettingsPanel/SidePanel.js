@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { Button, Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import ImageSettings from "./ImageSettings";
 import LayoutSettings from "./LayoutSettings";
 import ExportSettings from "./ExportSettings";
@@ -11,6 +11,7 @@ import {
   faCogs,
   faDatabase,
   faFileExport,
+  faCog,
 } from "@fortawesome/free-solid-svg-icons";
 
 const styles = {
@@ -47,6 +48,22 @@ const styles = {
     padding: "10px",
     overflowY: "auto",
     maxHeight: "100vh",
+  },
+  firebaseContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: "20px",
+  },
+  firebaseButton: {
+    color: "#1D2F6F",
+    "&:hover": {
+      color: "#8390FA",
+    },
+  },
+  firebaseText: {
+    marginBottom: "10px",
+    color: "#1D2F6F",
   },
 };
 
@@ -129,8 +146,8 @@ const SidePanel = ({ onUpdate }) => {
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s;
-        flex: 0 1 200px;
-        height: 200px;
+        flex: 0 1 150px; /* Adjusted size */
+        height: 150px; /* Adjusted size */
       "><img src="${image}" alt="Gallery item ${index + 1}" style="
         width: 100%;
         height: 100%;
@@ -154,7 +171,7 @@ const SidePanel = ({ onUpdate }) => {
         justify-content: ${flexSettings.justifyContent};
         align-items: ${flexSettings.alignItems};
         align-content: center;
-        height: 100vh;
+        background-color: transparent; /* Remove background color */
       ">
         ${imagesHtml}
       </div>
@@ -234,12 +251,12 @@ const SidePanel = ({ onUpdate }) => {
               <span class="next">&#10095;</span>
             \`;
             document.body.appendChild(lightbox);
-
+  
             const closeLightbox = () => {
               document.body.removeChild(lightbox);
               document.removeEventListener('keydown', handleKeydown);
             };
-
+  
             const handleKeydown = (e) => {
               if (e.key === 'Escape') {
                 closeLightbox();
@@ -253,7 +270,7 @@ const SidePanel = ({ onUpdate }) => {
                 index = nextIndex;
               }
             };
-
+  
             document.addEventListener('keydown', handleKeydown);
             lightbox.querySelector('.close').addEventListener('click', closeLightbox);
             lightbox.querySelector('.prev').addEventListener('click', (e) => {
@@ -262,7 +279,7 @@ const SidePanel = ({ onUpdate }) => {
               lightbox.querySelector('.lightbox-image').src = document.querySelectorAll('.${uniqueId} .thumbnail img')[prevIndex].src;
               index = prevIndex;
             });
-
+  
             lightbox.querySelector('.next').addEventListener('click', (e) => {
               e.stopPropagation();
               const nextIndex = (index + 1) % ${images.length};
@@ -344,17 +361,17 @@ const SidePanel = ({ onUpdate }) => {
           />
         )}
         {activeTab === "firebase" && (
-          <Box>
-            <Typography variant="h6" gutterBottom>
-              Firebase Settings
+          <Box sx={styles.firebaseContainer}>
+            <Typography variant="h6" sx={styles.firebaseText}>
+              Firebase Config
             </Typography>
-            <Button
+            <IconButton
               variant="contained"
-              color="primary"
+              sx={styles.firebaseButton}
               onClick={() => setIsFirebaseModalOpen(true)}
             >
-              Configure Firebase
-            </Button>
+              <FontAwesomeIcon icon={faCog} />
+            </IconButton>
           </Box>
         )}
         {activeTab === "export" && (
