@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/ImageGalleryCMSMaker/static/css/main.2283f22c.css",
-    "main.js": "/ImageGalleryCMSMaker/static/js/main.bfe27e91.js",
-    "static/js/453.72c2ba6a.chunk.js": "/ImageGalleryCMSMaker/static/js/453.72c2ba6a.chunk.js",
+    "main.css": "/ImageGalleryCMSMaker/static/css/main.4d7e3343.css",
+    "main.js": "/ImageGalleryCMSMaker/static/js/main.04695fed.js",
+    "static/js/453.7e2f1e08.chunk.js": "/ImageGalleryCMSMaker/static/js/453.7e2f1e08.chunk.js",
     "index.html": "/ImageGalleryCMSMaker/index.html",
-    "main.2283f22c.css.map": "/ImageGalleryCMSMaker/static/css/main.2283f22c.css.map",
-    "main.bfe27e91.js.map": "/ImageGalleryCMSMaker/static/js/main.bfe27e91.js.map",
-    "453.72c2ba6a.chunk.js.map": "/ImageGalleryCMSMaker/static/js/453.72c2ba6a.chunk.js.map"
+    "main.4d7e3343.css.map": "/ImageGalleryCMSMaker/static/css/main.4d7e3343.css.map",
+    "main.04695fed.js.map": "/ImageGalleryCMSMaker/static/js/main.04695fed.js.map",
+    "453.7e2f1e08.chunk.js.map": "/ImageGalleryCMSMaker/static/js/453.7e2f1e08.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2283f22c.css",
-    "static/js/main.bfe27e91.js"
+    "static/css/main.4d7e3343.css",
+    "static/js/main.04695fed.js"
   ]
 }
